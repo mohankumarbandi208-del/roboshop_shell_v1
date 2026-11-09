@@ -23,7 +23,7 @@ do
     echo "$instance Instance ID : $Instance_id"
 
     #Get the IP address of the instances
-    if [$instance=="frontend"]; then
+    if [$instance == "frontend"]; then
         IP=$(aws ec2 describe-instances --instance-ids $Instance_id \
              --query 'Reservations[].Instances[].PublicIpAddress' --output text
              )
