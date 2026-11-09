@@ -23,19 +23,19 @@ do
     echo "$instance Instance ID : $Instance_id"
 
     #Get the IP address of the instances
-    if [$instance != "frontend"]; then
-        IP=$(aws ec2 describe-instances --instance-ids $Instance_id \
-             --query 'Reservations[].Instances[].PrivateIpAddress' --output text
-             )
-        #define the Route 53 record
-        r53_record=$instance.$domain_name
-
-    else
+    if [$instance=="frontend"]; then
         IP=$(aws ec2 describe-instances --instance-ids $Instance_id \
              --query 'Reservations[].Instances[].PublicIpAddress' --output text
              )
         #define the Route 53 record
         r53_record=$domain_name
+
+    else
+        IP=$(aws ec2 describe-instances --instance-ids $Instance_id \
+             --query 'Reservations[].Instances[].PrivateIpAddress' --output text
+             )
+        #define the Route 53 record
+        r53_record=$instance.$domain_name
     fi
 
     #Update the R53 Record
