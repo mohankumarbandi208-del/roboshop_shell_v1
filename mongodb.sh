@@ -1,13 +1,18 @@
 #!/bin/bash
-#!/bin/bash
-
+#get the user type
 user_id=$(id -u)
+
+# define the logs folder
 logs_folder="/var/log/roboshop"
+
+#define logs file
 logs_file="${logs_folder}/${0}.log"
+
+#define colours
 R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
-N="\e[0m"
+N="e[0m"
 
 if [ $user_id -ne 0 ]; then
     echo "Please run this script with sudo access.."
