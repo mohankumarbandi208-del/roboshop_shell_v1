@@ -3,11 +3,12 @@
 user_id=$(id -u)
 logs_folder="/var/log/roboshop"
 logs_file="${logs_folder}/${0}.log"
+domain_name="smachiv.store"
+scripts_dir=$(dirname "$(realpath "$0")")
 R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
-
 if [ $user_id -ne 0 ]; then
     echo "Please run this script with sudo access.."
     exit 1
@@ -31,7 +32,7 @@ echo "$(timestamp) [INFO] ==== Script started Execution =====" | tee -a $logs_fi
 cp rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo
 validate $? "Adding RabbbitMQ repo"
 
-dnf install erlang rabbitmq-server -y
+dnf install erlang rabbitmq-server -y &>> $logs_file
 validate $? "Installing rabbitmq-server"
 
 systemctl enable rabbitmq-server
