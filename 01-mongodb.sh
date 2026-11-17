@@ -8,6 +8,10 @@ logs_folder="/var/log/roboshop"
 #define logs file
 logs_file="${logs_folder}/${0}.log"
 
+#domain name
+domain_name="daws92s.store"
+scripts_dir=$(dirname "$(realpath "$0")")
+
 #define colours
 R="\e[31m"
 G="\e[32m"
