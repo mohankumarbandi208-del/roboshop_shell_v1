@@ -87,7 +87,6 @@ validate $? "Installing MongoDB Client"
 
 #collect the count of the products and if u got ERROR move to logs file
 product_count=$(mongosh --host "mongodb.$domain_name" --quiet --eval 'db.getSiblingDB("catalogue").products.countDocuments()' 2>> $logs_file)
-validate $? "Connecting to MongoDB"
 
 # If products are not loaded load the data from the database
 if [ "$product_count" -eq 0 ]; then
