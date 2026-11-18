@@ -18,9 +18,9 @@ fi
 mkdir -p $logs_folder
 
 timestamp(){
-    date "%F %T"
-
+    date "+%F %T" 
 }
+
 validate(){
     if [ $1 -ne 0 ]; then
         echo -e "$(tiemstamp) [ERROR] ${2} ${2}..${R}FAILED${N}" | tee -a $logs_file

@@ -29,13 +29,16 @@ validate(){
         echo -e "$(timestamp) [INFO] ${2}..${G}SUCCESS${N}" | tee -a $logs_file
     fi
 }
+#starting script
 echo "$(timestamp) [INFO] ==== Script started Execution =====" | tee -a $logs_file
 
+#install Nodejs
 dnf module disable nodejs -y &>> $logs_file
 dnf module enable nodejs:24 -y &>> $logs_file
 dnf install nodejs -y &>> $logs_file
 validate $? "installing nodejs"
 
+#Creating User
 id roboshop &>> $logs_file
 if [ $? -ne 0 ]; then
     useradd --system --home /app --shell /sbin/nologin --comment "roboshop system user" roboshop
@@ -44,38 +47,48 @@ else
     echo -e "$(timestamp) [INFO] system user roboshop already exist....${Y}SKIPPING${N}"
 fi
 
+#Removing old code 
 rm -rf /app
 validate $? "Removing old code"
 
+#creating app directory
 mkdir /app
 validate $? "create app directory"
 
+#download code
 curl -L -o /tmp/catalogue.zip https://raw.githubusercontent.com/daws-92s/roboshop-documentation/refs/heads/main/artifacts/catalogue-v4.zip
 cd /app
 unzip /tmp/catalogue.zip
 validate $? "Downloading catalogue"
 
+#install dependencies
 cd /app
 npm install &>> $logs_file
 validate $? "Installing dependencies"
 
+#configure the catalogue service file
 sed -i "s/DOMAIN_NAME/$domain_name/g" "$scripts_dir/catalogue.service"
 cp "$scripts_dir/catalogue.service" /etc/systemd/system/catalogue.service
 
+#restart catalogue
 systemctl daemon-reload &>> $logs_file
 systemctl enable catalogue &>> $logs_file
 systemctl start catalogue &>> $logs_file
 validate $? "Starting and enabling catalogue"
 
+#Adding Mongo repo
 cp "$scripts_dir/mongo.repo" /etc/yum.repos.d/mongo.repo
 validate $? "Adding Mongo repo"
 
+#install mongodb
 dnf install mongodb-mongosh -y &>> $logs_file
 validate $? "Installing MongoDB Client"
 
+#collect the count of the products and if u got ERROR move to logs file
 product_count=$(mongosh --host "mongodb.$domain_name" --quiet --eval 'db.getSiblingDB("catalogue").products.countDocuments()' 2>> $logs_file)
 validate $? "Connecting to MongoDB"
 
+# If products are not loaded load the data from the database
 if [ "$product_count" -eq 0 ]; then
     mongosh --host "mongodb.$domain_name" </app/db/master-data.js &>> $logs_file
     validate $? "Loading products"
