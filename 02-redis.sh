@@ -9,7 +9,7 @@ logs_folder="/var/log/roboshop"
 logs_file="${logs_folder}/${0}.log"
 
 #domain name
-domain_name="daws92s.store"
+domain_name="smachiv.shop"
 scripts_dir=$(dirname "$(realpath "$0")")
 
 #define colours
@@ -26,8 +26,7 @@ fi
 mkdir -p $logs_folder
 
 timestamp(){
-    date "%F %T"
-
+    date "+%F %T" 
 }
 validate(){
     if [ $1 -ne 0 ]; then
