@@ -25,6 +25,10 @@ fi
 
 mkdir -p $logs_folder
 
+timestamp(){
+    date "+%F %T" 
+}
+
 echo "Script started execution at $(date +"%F %T")" &>> $logs_file
 
 validate(){
