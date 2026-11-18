@@ -82,3 +82,9 @@ if [ "$product_count" -eq 0 ]; then
 else
     echo -e "$(timestamp) [INFO] Products are already loaded...${Y}SKIPPING${N}"
 fi
+
+systemctl restart catalogue
+validate $? "Restarting Catalogue"
+
+echo "$(timestamp) [INFO] Script completed in $SECONDS seconds"
+echo "$(timestamp) [INFO] ==== Script completed Execution =====" | tee -a $logs_file
