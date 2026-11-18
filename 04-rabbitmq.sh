@@ -43,7 +43,7 @@ rabbitmqctl add_user roboshop roboshop123
 rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
 
 #checking user details and creating user
-rabbitmqctl list__users | grep -qw "roboshop"
+rabbitmqctl list_users | grep -qw "roboshop"
 if [ $? -ne 0 ]; then
     rabbitmqctl add_user roboshop roboshop123
     validate $? "Adding user and setting permissions"
