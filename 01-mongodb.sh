@@ -9,7 +9,7 @@ logs_folder="/var/log/roboshop"
 logs_file="${logs_folder}/${0}.log"
 
 #domain name
-domain_name="daws92s.store"
+domain_name="smachiv.shop"
 scripts_dir=$(dirname "$(realpath "$0")")
 
 #define colours
@@ -36,7 +36,7 @@ validate(){
     fi
 }
 
-cp mongo.repo vim /etc/yum.repos.d/mongo.repo
+cp mongo.repo /etc/yum.repos.d/mongo.repo
 validate $? "Adding Mongo repo"
 
 dnf install mongodb-org -y &>> $logs_file
