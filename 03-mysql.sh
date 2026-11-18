@@ -38,13 +38,13 @@ validate $? "enabling MYSQL:8.4 version"
 dnf install mysql-server -y &>> $logs_file
 validate $? "Installing sql-server"
 
-systemctl enable mysql &>> $log_file
+systemctl enable mysql &>> $logs_file
 systemctl start mysqld
 
 validate $? "start and enable MySQL"
 
 #setting root password
-mysql_secure_installation --set-root-pass RoboShop@1
+mysql_secure_installation --set-root-pass RoboShop@1  &>> $logs_file
 validate $? "Setup MySQL root password"
 
 echo "$(timestamp) [INFO] Script completed in $SECONDS seconds"
