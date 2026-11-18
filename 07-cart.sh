@@ -43,7 +43,7 @@ if [ $? -ne 0 ]; then
     validate $? "Creating system user"
 else 
     echo -e "$(timestamp) [INFO] User already exist... ${Y}SKIPPNIG${N}"
-
+fi
 rm -rf /app
 
 mkdir /app
