@@ -45,7 +45,7 @@ rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*"
 #checking user details and creating user
 rabbitmqctl list_users | grep -qw "roboshop"
 if [ $? -ne 0 ]; then
-    rabbitmqctl add_user roboshop roboshop123
+    rabbitmqctl add_user roboshop roboshop123 &>> $logs_file
     validate $? "Adding user and setting permissions"
 else
     echo -e "$(timestamp) [INFO] RabbitMQ user already exist...${Y}SKIPPING${N}"
