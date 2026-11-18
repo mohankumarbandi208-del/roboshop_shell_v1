@@ -69,6 +69,7 @@ validate $? "Installing dependencies"
 #configure the catalogue service file
 sed -i "s/DOMAIN_NAME/$domain_name/g" "$scripts_dir/catalogue.service"
 cp "$scripts_dir/catalogue.service" /etc/systemd/system/catalogue.service
+validate $? "copying catalogue service file"
 
 #restart catalogue
 systemctl daemon-reload &>> $logs_file
